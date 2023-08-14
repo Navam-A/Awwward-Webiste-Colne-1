@@ -79,8 +79,7 @@ html, body{
     padding-right: 50px;
     font-size: 1.5vw;
 }
-/* .smallHeading h5{
-} */
+
 .heroFooter{
     display: flex;
     justify-content: space-between;
@@ -122,9 +121,9 @@ html, body{
 .elem{
     color: #AAAAAA;
     text-transform: uppercase;
-    width: 90%;
+    width: 95%;
     border-top:1px solid #888;
-    padding: 3.5vw 1.5vw;
+    padding: 3.5vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -133,6 +132,7 @@ html, body{
 .elem h1{
     font-size: 7vw;
     font-weight: 700;
+    opacity: .7;
 }
 .elem h5{
     font-size: 1vw;
@@ -143,9 +143,10 @@ html, body{
 }
 .elem img{
     opacity: 0;
-    height: 120%;
-    width: 20vw;
-    z-index: 2;
+    pointer-events: none;
+    transform: translate(-57%, -50%);
+    height: 140%;
+    z-index: 999;
     position: absolute;
 }
 .about{
