@@ -66,7 +66,7 @@ function mouseFollower(xScale, yScale){
 }
 mouseResizer();
 mouseFollower();
-// firstPageAnim();
+firstPageAnim();
 
 document.querySelectorAll(".elem").forEach(function(elem){
     var rotate = 0;
