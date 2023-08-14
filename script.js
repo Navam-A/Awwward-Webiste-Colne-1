@@ -32,36 +32,33 @@ function firstPageAnim() {
 
 function mouseResizer(){
     // normal scale of mouse
-    var xdef = 1;
-    var ydef = 1;
+    var xscale = 1;
+    var yscale = 1;
     // previous values
     var xprev = 0;
     var yprev = 0;
     window.addEventListener("mousemove",function(dets){
-        timeOut = 0;
+        clearTimeout(timeOut);
 
-        var xdiff = dets.clientX - xprev;
-        var ydiff = dets.clientY - yprev;
-
+        
+        xscale = gsap.utils.clamp(.8,1.2,dets.clientX - xprev);
+        yscale = gsap.utils.clamp(.8,1.2,dets.clientY - yprev);
+        
         xprev = dets.clientX;
         yprev = dets.clientY;
 
-        var xScale = gsap.utils.clamp(.8,1.2,xdiff);
-        var yScale = gsap.utils.clamp(.8,1.2,ydiff);
-        
-        mouseFollower(xScale, yScale);
+        mouseFollower(xscale, yscale);
         
         timeOut = setTimeout(function() {
-            document.querySelector(".miniCircle").style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1, 1)`;
-
-        })
+            document.querySelector(".miniCircle").style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1, 1)`
+        }, 100)
     })
 
 }
 
-function mouseFollower(xScale, yScale){
-    document.addEventListener("mousemove",function(dets){
-        document.querySelector(".miniCircle").style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xScale}, ${yScale})`;
+function mouseFollower(xscale, yscale){
+    window.addEventListener("mousemove",function(dets){
+        document.querySelector(".miniCircle").style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xscale}, ${yscale})`;
     })
 }
 mouseResizer();
@@ -72,16 +69,25 @@ document.querySelectorAll(".elem").forEach(function(elem){
     var rotate = 0;
     var diffrot = 0;
 
+    elem.addEventListener("mouseleave", function (dets) {
+        gsap.to(elem.querySelector("img"), {
+          opacity: 0,
+          ease: Power3,
+          duration: 0.5,
+        });
+      });
+
     elem.addEventListener("mousemove", function(dets) {
         var diff = dets.clientY - elem.getBoundingClientRect().top;
         diffrot = dets.clientX - rotate;
-        rotate = dets.clientX
+        rotate = dets.clientX;
         
         gsap.to(elem.querySelector("img"), {
             opacity:1,
             ease: "easeInOut",
             top: diff,
             left: dets.clientX,
+            rotate: gsap.utils.clamp(-20, 20, diffrot * 0.5),
         });
     })
 })
